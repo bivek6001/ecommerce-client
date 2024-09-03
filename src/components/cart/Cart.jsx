@@ -7,30 +7,6 @@ import { useDispatch,useSelector } from 'react-redux'
 import { remove,updateCart } from '../../redux/cartSlice'
 import {toast} from "react-hot-toast"
 import { Link } from 'react-router-dom'
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 
 
 export default function Cart() {
@@ -38,10 +14,16 @@ export default function Cart() {
     const cart= useSelector((state)=>state.cart.cart)
     // console.log(cart)
     const dispatch=useDispatch();
+    const total= cart?.reduce((total,current)=>{
+      // console.log(total)
+      return total+current.price
+    },0)
+  
+    console.log(total)
   
     return (
         <>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white p-3">
+        {cart.length>=1 ?    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white p-3">
             <h1 className='text-2xl '>Cart</h1>
         <div className="mt-8">
                       <div className="flow-root">
@@ -97,7 +79,7 @@ export default function Cart() {
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
-                      <p>$262.00</p>
+                      <p>{total}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
@@ -121,8 +103,14 @@ export default function Cart() {
                         </button>
                       </p>
                     </div>
-                  </div>
-                  </div>
+                  </div> 
+                  </div> :<div className='h-screen w-screen flex justify-center items-center flex-col gap-3'>
+                    
+                    <img src="https://cdn.zeptonow.com/production///tr:w-100,ar-100-100,pr-true,f-auto,q-80/app/svg/empty_cart_v2.svg" alt="empty cart" />
+                    <p className='font-semibold text-xl'>Oops! Your Cart is empty Now</p>
+                  <Link to="/">  <button className='w-[400px] bg-black h-[40px] text-white font-bold rounded-md'> browse products</button></Link>
+                    </div>}
+     
         </>
     )
 }

@@ -5,16 +5,21 @@ import Cart from './components/cart/Cart';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
+ 
 } from "react-router-dom";
 import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
 import Checkout from './components/checkout/Checkout';
-import Product from './components/product/Product';
+
 import ProductDetail from './components/productDetail/ProductDetail';
 import Notfound from './Notfound.jsx'
 import Profile from './components/profile/Profile';
+import AccountPrivacy from './components/profile/AccountPrivacy.jsx';
+import Order from './components/profile/Order.jsx';
+import Logout from './components/profile/Logout.jsx';
+import Address from './components/profile/Address.jsx';
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,7 +52,21 @@ const router = createBrowserRouter([
   element:<Notfound/>
 },
 {path:"/profile",
-  element:<Profile/>
+  element:<Profile/>,
+  children:[{
+    path:"/profile/order",
+    element:<Order/>
+  },{
+    path:"/profile/privacy",
+    element:<AccountPrivacy/>
+  },{
+    path:"/profile/logout",
+    element:<Logout/>
+  },
+  ,{
+    path:"/profile/address",
+    element:<Address/>
+  }]
 }
 ]);
 
