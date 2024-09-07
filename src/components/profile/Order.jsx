@@ -8,7 +8,7 @@ const Order = () => {
   return (
     <div className="orders shadow-md h-[100%] w-[100%] p-3  ">
         <h1 className='text-2xl font-bold'>Your orders</h1>
-    {orders.map((order)=>{
+    {orders?.map((order)=>{
       console.log(order)
       return (
         <div className=' flex items-center gap-3 border-b p-3'>
@@ -17,7 +17,7 @@ const Order = () => {
         </div>
         <div className="order-details">
           <p className='font-bold text-base'>Order id: #{order._id}</p>
-          <p className='text-sm text-[#6B747F]'>    placed on : {order.createdAt.split("T")[0]}</p>
+          <p className='text-sm text-[#6B747F]'>    placed on : {order?.createdAt.split("T")[0]}</p>
         </div>
         <div className="status bg-[#999999] text-white rounded-lg w-[80px] p-1 text-sm font-semibold text-center">
         {order.status}
