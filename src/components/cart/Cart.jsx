@@ -16,7 +16,7 @@ export default function Cart() {
     const dispatch=useDispatch();
     const total= cart?.reduce((total,current)=>{
       // console.log(total)
-      return total+current.price
+      return total+current.price*current.quantity
     },0)
   
     console.log(total)

@@ -18,13 +18,15 @@ import AccountPrivacy from './components/profile/AccountPrivacy.jsx';
 import Order from './components/profile/Order.jsx';
 import Logout from './components/profile/Logout.jsx';
 import Address from './components/profile/Address.jsx';
+import Test from './Test.js';
+import ProtectedRoute from './ProtectedRoute.js';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-     <Home/>
+    <ProtectedRoute><Home/></ProtectedRoute> 
     ),
   },
   {
@@ -66,7 +68,13 @@ const router = createBrowserRouter([
   ,{
     path:"/profile/address",
     element:<Address/>
-  }]
+  },
+]
+},
+{
+  path:"/test",
+  element:<Test/>,
+  
 }
 ]);
 

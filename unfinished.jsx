@@ -1,4 +1,3 @@
-Profile,
-payment,
+
 order,
 admin

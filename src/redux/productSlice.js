@@ -6,12 +6,12 @@ const initialState = {
    loading:false
 }
 export const fetchProduct= createAsyncThunk("product/all",async()=>{
-    const response= await axios.get("http://localhost:9000/product")
+    const response= await axios.get("https://ecommerce-server-4xf4.onrender.com/product")
     return response.data.products
     
 })
 export const fetchProductwithId= createAsyncThunk("product/id",async(id)=>{
-    const response= await axios.get(`http://localhost:9000/product/${id}`)
+    const response= await axios.get(`https://ecommerce-server-4xf4.onrender.com/product/${id}`)
     return response.data.product
 });
 const productSlice = createSlice({

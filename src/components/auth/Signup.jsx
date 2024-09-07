@@ -19,7 +19,7 @@ export default function Signup() {
       e.preventDefault();
       try{
           setLoading(true)
-        const response= await axios.post("http://localhost:9000/user/signup",credentials)
+        const response= await axios.post("https://ecommerce-server-4xf4.onrender.com/user/signup",credentials)
         
         toast.success(response.data.message)
         navigate('/signin')
