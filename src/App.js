@@ -68,7 +68,7 @@ const router = createBrowserRouter([
   ,{
     path:"/profile/address",
     element:<Address/>
-  },
+  }
 ]
 },
 {
