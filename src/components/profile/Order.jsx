@@ -6,9 +6,9 @@ const Order = () => {
   const orders= user.orders;
 
   return (
-    <div className="orders shadow-md h-[100%] w-[100%] p-3  ">
+    <div className="orders shadow-md h-[100%] w-[100%] p-3 overflow-y-scroll no-scrollbar ">
         <h1 className='text-2xl font-bold'>Your orders</h1>
-    {orders?.map((order)=>{
+    {orders && orders?.map((order)=>{
       console.log(order)
       return (
         <div className=' flex items-center gap-3 border-b p-3'>

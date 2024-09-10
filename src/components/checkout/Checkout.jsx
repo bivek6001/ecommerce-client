@@ -1,16 +1,17 @@
 
 import { useState } from 'react'
-import {useSelector} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
 import axios from "axios"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import {useNavigate} from "react-router-dom"
 import {toast} from "react-hot-toast"
+import { emptyCart } from '../../redux/cartSlice';
 export default function Checkout() {
   const cart= useSelector((state)=>state.cart.cart)
   const ids= cart?.map((product)=>product._id)
   // console.log(id)
 const navigate=useNavigate()
-
+  const dispatch= useDispatch()
   const [agreed, setAgreed] = useState(false)
   const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState(
@@ -30,12 +31,12 @@ const navigate=useNavigate()
   }
   const handleSubmit=async (e)=>{
     async function paymentHandler(){
-      const response= await axios.post("http://localhost:9000/checkout",{
+      const response= await axios.post("https://ecommerce-server-4xf4.onrender.com/checkout",{
         amount :9000,
         currency :"INR"
       })
 
-      console.log(response.data)
+      console.log(response.data.order.id)
       var options = {
         "key": "rzp_test_nKloVUIf02hQTe", // Enter the Key ID generated from the Dashboard
         "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -43,8 +44,8 @@ const navigate=useNavigate()
         "name": "Acme Corp",
         "description": "Test Transaction",
         "image": "https://example.com/your_logo",
-        "order_id":"", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+        "order_id":response.data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "callback_url": "https://ecommerce-server-4xf4.onrender.com/verification",
         "prefill": {
             "name": "Gaurav Kumar",
             "email": "gaurav.kumar@example.com",
@@ -76,16 +77,18 @@ paymentHandler();
       })
       console.log(response);
       if(response.data.success){
+        dispatch(emptyCart())
         toast.success("Order placed successfully")
-        navigate("/")
+        // navigate("/order-success")
+
       }
     }catch(e){
       console.error(e.response.data.message);
       toast.error(e.response.data.message)
     }
-//     finally{
-// setLoading(false)
-//     }
+    finally{
+setLoading(false)
+    }
   }
 
   return (
@@ -120,7 +123,7 @@ paymentHandler();
                 name="firstname"
                 type="text"
                 onChange={handleChange}
-                autoComplete="given-name"
+                autoComplete="given-name" required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -135,7 +138,7 @@ paymentHandler();
                 name="lastname"
                 type="text"
                 onChange={handleChange}
-               
+               required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -149,6 +152,7 @@ paymentHandler();
                 id="company"
                 name="address"
                 type="text"
+                required
                 onChange={handleChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -163,6 +167,7 @@ paymentHandler();
                 id="email"
                 name="state"
                 type="text"
+                required
                 onChange={handleChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -178,6 +183,7 @@ paymentHandler();
                 id="pin"
                 name="pin"
                 type="text"
+                required
                 onChange={handleChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -193,6 +199,7 @@ paymentHandler();
                 id="country"
                 name="country"
                 type="text"
+                required
                 onChange={handleChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -209,6 +216,7 @@ paymentHandler();
                 id="phone-number"
                 name="phone"
                 type="tel"
+                required
                 onChange={handleChange}
                 className="block w-full rounded-md  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />

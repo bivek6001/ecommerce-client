@@ -9,6 +9,7 @@ const userNavigation = [
  ]
 export default function Navbar({children}) {
   const loggedinUser = useSelector((state)=>state.user.user);
+  const cart= useSelector((state)=>state.cart.cart)
 const user = {
   name: loggedinUser?.name,
   email: loggedinUser?.email,
@@ -23,24 +24,23 @@ const user = {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
+             <Link to="/">   <div className="flex-shrink-0">
                   <img
                     alt="Your Company"
                     src="https://marketplace.canva.com/EAF4SUL5t7g/3/0/1600w/canva-yellow-online-shop-logo-N5cFBLWMK5Y.jpg"
                     className="h-[50px] rounded-md"
                   />
-                </div>
+                </div></Link>
         
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                 <Link to="/cart"> <button
                     type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative rounded-full bg-gray-800 p-1  text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                 <FaShoppingCart size={"19px"}/>
+                 
+                 <FaShoppingCart size={"19px"}/> <div className='text-white absolute top-[-10px] h-[20px] w-[20px]  right-[-10px] rounded-full bg-red-500  font-semibold text-sm'>{cart.length}</div>
                   </button></Link>
 
                   {/* Profile dropdown */}
@@ -59,7 +59,7 @@ const user = {
                       {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
                           <Link
-                            to={item.href}
+                            to="/profile"
                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                           >
                             {item.name}

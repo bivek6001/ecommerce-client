@@ -6,16 +6,22 @@ const initialState = {
    loading:false
 }
 export const fetchProduct= createAsyncThunk("product/all",async()=>{
-    const response= await axios.get("https://ecommerce-server-4xf4.onrender.com/product")
+    const response= await axios.get("https://ecommerce-server-4xf4.onrender.com/product/all")
     return response.data.products
     
 })
 export const fetchProductwithId= createAsyncThunk("product/id",async(id)=>{
-    const response= await axios.get(`https://ecommerce-server-4xf4.onrender.com/product/${id}`)
+    const response= await axios.get(`https://ecommerce-server-4xf4.onrender.com/product/by/${id}`)
+    console.log(response)
     return response.data.product
 });
+export const fetchProductwithBrand= createAsyncThunk("/product/brand",async (brand)=>{
+    
+    const response= await axios.get(`https://ecommerce-server-4xf4.onrender.com/product/filter?brand=${brand}`)
+    return response.data.products
+})
 const productSlice = createSlice({
-    name:"User",
+    name:"product",
     initialState,
     reducers:{
         setUser:(state,action)=>{
@@ -39,6 +45,13 @@ const productSlice = createSlice({
        .addCase(fetchProductwithId.fulfilled,(state,action)=>{
             state.loading=false
             state.selectedProduct=action.payload
+        })
+        .addCase(fetchProductwithBrand.pending,(state)=>{
+            state.loading=true
+        })
+        .addCase(fetchProductwithBrand.fulfilled,(state,action)=>{
+            state.loading=false
+            state.product=action.payload
         })
     }
 })

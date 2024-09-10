@@ -1,5 +1,5 @@
 import  {createSlice} from "@reduxjs/toolkit"
-
+import toast from "react-hot-toast"
 const initialState = {
    cart:[]
 }
@@ -9,10 +9,17 @@ const cartSlice = createSlice({
     initialState,
     reducers:{
      addtoCart:(state,action) => {
+      const existingItem = state.cart.find((item) => item._id === action.payload._id);
 
-    
-        state.cart.push({...action.payload,quantity:1})
-
+      if (existingItem) {
+          // Show a notification that the item is already in the cart
+          toast.error("Item is already in the cart");
+      } else {
+          // Add item to the cart if not already present
+          toast.success("Item added to cart");
+          state.cart.push({ ...action.payload, quantity: 1 });
+       
+      }
      },
      remove:(state,action) => {
         const id= state.cart.findIndex((item)=>{
@@ -43,9 +50,12 @@ const cartSlice = createSlice({
    
      
 
+     },
+     emptyCart:(state,action) => {
+        state.cart=[]
      }
     }
 })
 
-export const {addtoCart,remove,updateCart}= cartSlice.actions
+export const {addtoCart,remove,updateCart,emptyCart}= cartSlice.actions
 export default cartSlice.reducer

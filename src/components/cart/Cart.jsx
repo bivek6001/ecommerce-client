@@ -24,7 +24,7 @@ export default function Cart() {
     return (
         <>
         {cart.length>=1 ?    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white p-3">
-            <h1 className='text-2xl '>Cart</h1>
+            <h1 className='text-2xl font-bold '>Cart</h1>
         <div className="mt-8">
                       <div className="flow-root">
                         <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -49,7 +49,7 @@ export default function Cart() {
                                   {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
-                                  <p className="text-gray-500">Qty   <select name="quantitiy" onChange={(e)=>{
+                                  <p className="text-gray-500 font-bold">Qty   <select name="quantitiy" onChange={(e)=>{
                                     // console.log(e.target.value);
                                     dispatch(updateCart({_id:product._id,quantity:+e.target.value}))
                                   }} >
@@ -78,10 +78,10 @@ export default function Cart() {
   
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                      <p>Subtotal</p>
+                      <p className='font-semibold'>Subtotal</p>
                       <p>{total}</p>
                     </div>
-                    <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                    <p className="mt-0.5 text-sm font-semibold text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
                       <Link to="/checkout"
                        
@@ -93,14 +93,14 @@ export default function Cart() {
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
                         or{' '}
-                        <button
+                     <Link to="/" > <button
                           type="button"
                           onClick={() => setOpen(false)}
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>
-                        </button>
+                        </button></Link>  
                       </p>
                     </div>
                   </div> 

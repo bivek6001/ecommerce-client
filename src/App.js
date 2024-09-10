@@ -20,7 +20,8 @@ import Logout from './components/profile/Logout.jsx';
 import Address from './components/profile/Address.jsx';
 import Test from './Test.js';
 import ProtectedRoute from './ProtectedRoute.js';
-
+import Navbar from './components/navbar/Navbar.jsx';
+import OrderSuccess from './OrderSuccess.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,22 +40,26 @@ const router = createBrowserRouter([
   },
   {
     path: "/cart",
-    element:<Cart/>
+    element:<ProtectedRoute><Cart/></ProtectedRoute>
   },
   {
     path:"/checkout",
-    element:<Checkout/>
+    element:<ProtectedRoute><Checkout/></ProtectedRoute>
   },
 {
   path:"/detail/:id",
-  element:<ProductDetail/>
+  element:<ProtectedRoute><Navbar><ProductDetail/></Navbar></ProtectedRoute>
+},{
+  path:"/order-success",
+  element:<ProtectedRoute><OrderSuccess/></ProtectedRoute>
 },
 {
   path:"*",
-  element:<Notfound/>
+  element:<ProtectedRoute><Notfound/></ProtectedRoute>
 },
+
 {path:"/profile",
-  element:<Profile/>,
+  element:<ProtectedRoute><Profile/></ProtectedRoute>,
   children:[{
     path:"/profile/order",
     element:<Order/>
